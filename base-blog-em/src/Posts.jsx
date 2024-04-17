@@ -8,13 +8,14 @@ export function Posts() {
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedPost, setSelectedPost] = useState(null);
 
-  const { data } = useQuery({
+  const { data, isError, isLoading } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
   });
 
-  // fetchPosts is async so return an empty div while fetching
-  if (!data) { return <div />; }
+  if (isLoading) {
+    return <h3>Loading...</h3>;
+  }
 
   return (
     <>

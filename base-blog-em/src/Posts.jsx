@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { useQuery } from "@tanstack/react-query";
 import { fetchPosts, deletePost, updatePost } from "./api";
 import { PostDetail } from "./PostDetail";
 const maxPostPage = 10;
@@ -8,8 +8,13 @@ export function Posts() {
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedPost, setSelectedPost] = useState(null);
 
-  // replace with useQuery
-  const data = [];
+  const { data } = useQuery({
+    queryKey: ["posts"],
+    queryFn: fetchPosts,
+  });
+
+  // fetchPosts is async so return an empty div while fetching
+  if (!data) { return <div />; }
 
   return (
     <>
@@ -25,11 +30,11 @@ export function Posts() {
         ))}
       </ul>
       <div className="pages">
-        <button disabled onClick={() => {}}>
+        <button disabled onClick={() => { }}>
           Previous page
         </button>
         <span>Page {currentPage + 1}</span>
-        <button disabled onClick={() => {}}>
+        <button disabled onClick={() => { }}>
           Next page
         </button>
       </div>

@@ -8,7 +8,7 @@ export function Posts() {
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedPost, setSelectedPost] = useState(null);
 
-  const { data, isError, isLoading } = useQuery({
+  const { data, isError, error, isLoading } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
   });
@@ -18,7 +18,12 @@ export function Posts() {
   }
 
   if (isError) {
-    return <h3>Oops, something went wrong!</h3>;
+    return (
+      <>
+        <h3>Oops, something went wrong!</h3>
+        <p>{error.toString()}</p>
+      </>
+    );
   }
 
   return (

@@ -11,6 +11,12 @@ export function Posts() {
   const { data, isError, error, isLoading } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
+    staleTime: 2000,  // inside this time, show cache data but refresh with new data for next request (default 0ms)
+/*  gcTime: 300000,   // flush cache after this time (default 300000ms / 5mins)
+                         timer starts once data is not being used by any component
+                         once gcTime has elapsed, data is flushed 
+
+*/
   });
 
   if (isLoading) {

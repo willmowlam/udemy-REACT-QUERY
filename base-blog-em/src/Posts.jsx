@@ -5,18 +5,18 @@ import { PostDetail } from "./PostDetail";
 const maxPostPage = 10;
 
 export function Posts() {
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedPost, setSelectedPost] = useState(null);
 
   const { data, isError, error, isLoading } = useQuery({
-    queryKey: ["posts"],
-    queryFn: fetchPosts,
+    queryKey: ["posts", currentPage],
+    queryFn: () => fetchPosts(currentPage),
     staleTime: 2000,  // inside this time, show cache data but refresh with new data for next request (default 0ms)
-/*  gcTime: 300000,   // flush cache after this time (default 300000ms / 5mins)
-                         timer starts once data is not being used by any component
-                         once gcTime has elapsed, data is flushed 
-
-*/
+    /*  gcTime: 300000,   // flush cache after this time (default 300000ms / 5mins)
+                             timer starts once data is not being used by any component
+                             once gcTime has elapsed, data is flushed 
+    
+    */
   });
 
   if (isLoading) {
@@ -46,11 +46,21 @@ export function Posts() {
         ))}
       </ul>
       <div className="pages">
-        <button disabled onClick={() => { }}>
+        <button
+          disabled={currentPage <= 1}
+          onClick={() => {
+            setCurrentPage((previousValue) => previousValue - 1);
+          }}
+        >
           Previous page
         </button>
-        <span>Page {currentPage + 1}</span>
-        <button disabled onClick={() => { }}>
+        <span>Page {currentPage}</span>
+        <button
+          disabled={currentPage >= maxPostPage}
+          onClick={() => {
+            setCurrentPage((previousValue) => previousValue + 1);
+          }}
+        >
           Next page
         </button>
       </div>

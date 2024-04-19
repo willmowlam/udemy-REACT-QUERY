@@ -9,21 +9,25 @@ const fetchUrl = async (url) => {
 };
 
 export function InfiniteSpecies() {
-  const { data, fetchNextPage, hasNextPage, isFetching, isLoading, isError, error } = useInfiniteQuery({
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage, // boolean indicating if pageParam is undefined
+    isFetching,
+    isLoading,
+    isError,
+    error,
+  } = useInfiniteQuery({
     queryKey: ["sw-species"], // The name of the query cache key
     queryFn: ({ pageParam = initialUrl }) => fetchUrl(pageParam), // The initial url and callback for query urls
-    getNextPageParam: (lastPage) => {
-      return lastPage.next || undefined;
-    }
+    getNextPageParam: (lastPage) => lastPage.next || undefined, // Set the next page if there is one or undefined
   });
 
-  if (isLoading) {
-    return <div className="loading">Loading...</div>
-  }
+  // Return early when initial loading
+  if (isLoading) {return <div className="loading">Loading...</div>}
 
-  if (isError) {
-    return <div className="error">Error: {error.toString()}</div>
-  }
+  // Return early on error
+  if (isError) {return <div className="error">Error: {error.toString()}</div>}
 
   return <>
     {
@@ -37,12 +41,12 @@ export function InfiniteSpecies() {
           fetchNextPage();
         }
       }}
-      hasMore={hasNextPage}
+      hasMore={hasNextPage} // Will be false if the next page param is undefined 
     >
       {
-        // Map over the pages data
+        // Map over the array of pages data
         data.pages.map((pageData) => {
-          // Map over the species data in a page
+          // Map over the array of species results in each page
           return pageData.results.map(species => {
             // Return a species child component
             return <Species

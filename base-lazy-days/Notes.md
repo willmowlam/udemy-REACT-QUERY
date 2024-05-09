@@ -1,4 +1,4 @@
-# ESLint and Prettier Formatting
+## ESLint and Prettier Formatting
 
 The Lazy Days Spa app comes with ESLint configuration, Prettier configuration, and VSCode settings to auto-format on save. If the auto-formatting isn't working in your setup, this might lead to tedious manual formatting before the code will run. Here are some suggestions if you're finding your code won't run without manual formatting:
 
@@ -64,3 +64,20 @@ Solutions that have already been applied to the course repo:
     "files.eol": "\n",
 }
 ```
+
+
+
+
+## React Query hook **useIsFetching**
+
+isLoading(Component) during initial mount
+
+isFetching(Data) due to cache staleTime expired, manual refetch, invalidation of data or time-based polling like refetchInterval option
+
+isFetching can be destructured from useQuery return object
+
+or
+
+Employ useIsFetching in a Loading component with a spinner instead when ANY query isFetching
+
+useIsFetching returns the number of live fetches

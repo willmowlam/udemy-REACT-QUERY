@@ -3,3 +3,4 @@ _eslintrc.json
 _prettierrc.json
 
 .vscode
+base-lazy-days/server/db/*.json

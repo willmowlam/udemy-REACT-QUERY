@@ -1,9 +1,18 @@
 import { Icon, Stack, Text } from "@chakra-ui/react";
 import { GiFlowerPot } from "react-icons/gi";
 
+import { usePrefetchTreatments } from "../treatments/hooks/useTreatments";
+
 import { BackgroundImage } from "@/components/common/BackgroundImage";
 
 export function Home() {
+
+  /* We cant run hooks like this in useEffect callbacks so its run here on each render of Home, 
+     plus as home is not very dynamic will call the hook infrequently
+     Also useQueryClient must be used in a hook
+  */
+  usePrefetchTreatments();  
+
   return (
     <Stack textAlign="center" justify="center" height="84vh">
       <BackgroundImage />

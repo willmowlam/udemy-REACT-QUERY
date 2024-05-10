@@ -3,8 +3,7 @@ import { useState } from "react";
 
 import type { Staff } from "@shared/types";
 
-import { filterByTreatment } from "../utils";
-
+// import { filterByTreatment } from "../utils";
 import { axiosInstance } from "@/axiosInstance";
 import { queryKeys } from "@/react-query/constants";
 
@@ -20,7 +19,7 @@ export function useStaff() {
 
   // Set a default empty staff array
   const fallback: Staff[] = [];
-  
+
   // Get data from server via useQuery (renaming data to staff and provide fallback)
   const { data: staff = fallback } = useQuery({
     queryKey: [queryKeys.staff], // Set queryKey to constant
